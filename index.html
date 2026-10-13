@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acoustox | IoT Sump Health Dashboard</title>
+    <!-- Google Fonts Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="logo-area">
+                <div class="logo-icon"></div>
+                <span class="logo-text">ACOUSTOX</span>
+            </div>
+            
+            <nav class="nav-menu">
+                <button class="nav-item active" data-tab="overview">
+                    <span class="icon">📊</span> Overview
+                </button>
+                <button class="nav-item" data-tab="machine-details">
+                    <span class="icon">⚙️</span> Sump Diagnostic
+                </button>
+                <button class="nav-item" data-tab="controls">
+                    <span class="icon">🎛️</span> System Controls
+                </button>
+                <button class="nav-item" data-tab="analytics">
+                    <span class="icon">📈</span> ESG & Savings
+                </button>
+            </nav>
+
+            <div class="machine-list-section">
+                <h3>CONNECTED SUMPS</h3>
+                <div class="machine-mini-card active" data-machine="CNC-01">
+                    <div class="status-dot online"></div>
+                    <div class="machine-info">
+                        <span class="m-name">CNC-01 (Turning)</span>
+                        <span class="m-status">Regenerator Active</span>
+                    </div>
+                </div>
+                <div class="machine-mini-card" data-machine="CNC-02">
+                    <div class="status-dot online"></div>
+                    <div class="machine-info">
+                        <span class="m-name">CNC-02 (Milling)</span>
+                        <span class="m-status">Sump Healthy</span>
+                    </div>
+                </div>
+                <div class="machine-mini-card warning" data-machine="VMC-03">
+                    <div class="status-dot warning"></div>
+                    <div class="machine-info">
+                        <span class="m-name">VMC-03 (High-Speed)</span>
+                        <span class="m-status">Brix Warning (9.2%)</span>
+                    </div>
+                </div>
+                <div class="machine-mini-card error" data-machine="CNC-04">
+                    <div class="status-dot critical"></div>
+                    <div class="machine-info">
+                        <span class="m-name">CNC-04 (Heavy-Duty)</span>
+                        <span class="m-status">Rancidity Alert</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar-footer">
+                <div class="user-badge">
+                    <div class="avatar"></div>
+                    <div class="user-info">
+                        <span class="name">Factory Supervisor</span>
+                        <span class="role">Coimbatore Hub-01</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="content-header">
+                <div class="header-title">
+                    <h1 id="page-title">Factory Overview</h1>
+                    <p id="page-subtitle" class="text-muted">Real-time status of all retrofitted machine sumps</p>
+                </div>
+                <div class="header-actions">
+                    <div class="system-status-indicator">
+                        <span class="pulse-ring"></span>
+                        <span class="status-label">Edge Network Online</span>
+                    </div>
+                    <button class="btn btn-primary" id="btn-trigger-regen">⚡ Quick Cycle</button>
+                </div>
+            </header>
+
+            <!-- TAB 1: OVERVIEW -->
+            <section class="tab-content active" id="tab-overview">
+                <!-- Top Statistics Row -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <span class="stat-title">Total Oil Saved</span>
+                            <span class="stat-icon">🛢️</span>
+                        </div>
+                        <div class="stat-value">1,420 L</div>
+                        <div class="stat-footer text-success">
+                            <span>↑ 18% this month</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <span class="stat-title">Water Recycled</span>
+                            <span class="stat-icon">💧</span>
+                        </div>
+                        <div class="stat-value">8,450 L</div>
+                        <div class="stat-footer text-success">
+                            <span>↑ 24% this month</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <span class="stat-title">Average Tool Life Extension</span>
+                            <span class="stat-icon">🦾</span>
+                        </div>
+                        <div class="stat-value">+26.4%</div>
+                        <div class="stat-footer text-success">
+                            <span>Reduced tooling costs</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <span class="stat-title">ZED Score Impact</span>
+                            <span class="stat-icon">🛡️</span>
+                        </div>
+                        <div class="stat-value">Gold Class</div>
+                        <div class="stat-footer text-muted">
+                            <span>Zero Liquid Discharge ready</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Factory Floor Layout & Active Incidents -->
+                <div class="dashboard-grid">
+                    <div class="card col-2">
+                        <div class="card-header">
+                            <h2>Factory Floor Real-Time Map</h2>
+                        </div>
+                        <div class="factory-map-container">
+                            <div class="factory-grid">
+                                <div class="factory-bay">
+                                    <h3>Bay A (Turning & Lathes)</h3>
+                                    <div class="bay-machines">
+                                        <div class="machine-node active" data-id="CNC-01">
+                                            <span class="node-icon">🤖</span>
+                                            <span class="node-name">CNC-01</span>
+                                            <span class="node-brix">Brix: 7.0%</span>
+                                        </div>
+                                        <div class="machine-node healthy" data-id="CNC-02">
+                                            <span class="node-icon">🤖</span>
+                                            <span class="node-name">CNC-02</span>
+                                            <span class="node-brix">Brix: 6.8%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="factory-bay">
+                                    <h3>Bay B (Milling & Drilling)</h3>
+                                    <div class="bay-machines">
+                                        <div class="machine-node warning-node" data-id="VMC-03">
+                                            <span class="node-icon">🤖</span>
+                                            <span class="node-name">VMC-03</span>
+                                            <span class="node-brix">Brix: 9.2%</span>
+                                        </div>
+                                        <div class="machine-node critical-node" data-id="CNC-04">
+                                            <span class="node-icon">🤖</span>
+                                            <span class="node-name">CNC-04</span>
+                                            <span class="node-brix">Brix: 4.8%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Regeneration Log</h2>
+                        </div>
+                        <div class="log-list">
+                            <div class="log-item">
+                                <div class="log-time">21:12</div>
+                                <div class="log-msg">CNC-01 completed acoustic de-tramp oil cycle (420ml removed)</div>
+                            </div>
+                            <div class="log-item warning-log">
+                                <div class="log-time">20:45</div>
+                                <div class="log-msg">VMC-03 Brix reading high (9.2%). Evaporation detected.</div>
+                            </div>
+                            <div class="log-item critical-log">
+                                <div class="log-time">19:30</div>
+                                <div class="log-msg">CNC-04 pH dropped to 7.2. Anaerobic bacteria threshold exceeded.</div>
+                            </div>
+                            <div class="log-item">
+                                <div class="log-time">18:00</div>
+                                <div class="log-msg">Auto-doser injected 4.2L water into CNC-02 sump</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 2: MACHINE DETAILS (DIAGNOSTIC) -->
+            <section class="tab-content" id="tab-machine-details">
+                <div class="selected-machine-bar">
+                    <h2>Active Diagnostic: <span id="active-machine-title" class="highlight-cyan">CNC-01 (Turning Center)</span></h2>
+                </div>
+
+                <div class="gauges-grid">
+                    <!-- Gauge 1: Brix Concentration -->
+                    <div class="gauge-card">
+                        <div class="gauge-title">Brix Concentration</div>
+                        <div class="gauge-value-large"><span id="val-brix">7.0</span>%</div>
+                        <div class="gauge-bar-wrapper">
+                            <div class="gauge-bar-fill" id="bar-brix" style="width: 70%; background: var(--success);"></div>
+                        </div>
+                        <div class="gauge-labels">
+                            <span>Min: 5%</span>
+                            <span class="target">Target: 7%</span>
+                            <span>Max: 9%</span>
+                        </div>
+                        <div class="gauge-status text-success" id="status-brix">Normal (Surfactant Balanced)</div>
+                    </div>
+
+                    <!-- Gauge 2: pH level -->
+                    <div class="gauge-card">
+                        <div class="gauge-title">pH Level</div>
+                        <div class="gauge-value-large" id="val-ph">8.8</div>
+                        <div class="gauge-bar-wrapper">
+                            <div class="gauge-bar-fill" id="bar-ph" style="width: 88%; background: var(--success);"></div>
+                        </div>
+                        <div class="gauge-labels">
+                            <span>Acidic: 6.5</span>
+                            <span class="target">Target: 8.5 - 9.2</span>
+                            <span>Alkaline: 10</span>
+                        </div>
+                        <div class="gauge-status text-success" id="status-ph">Alkaline Sump (Rust Protection Active)</div>
+                    </div>
+
+                    <!-- Gauge 3: Tramp Oil Volume -->
+                    <div class="gauge-card">
+                        <div class="gauge-title">Accumulated Tramp Oil</div>
+                        <div class="gauge-value-large"><span id="val-trampoil">0.24</span> L</div>
+                        <div class="gauge-bar-wrapper">
+                            <div class="gauge-bar-fill" id="bar-trampoil" style="width: 24%; background: var(--success);"></div>
+                        </div>
+                        <div class="gauge-labels">
+                            <span>Clean: 0L</span>
+                            <span class="target">Warning: 0.5L</span>
+                            <span>Critical: 1.0L</span>
+                        </div>
+                        <div class="gauge-status text-success" id="status-trampoil">Low Tramp Oil Film</div>
+                    </div>
+
+                    <!-- Gauge 4: Bacterial Count -->
+                    <div class="gauge-card">
+                        <div class="gauge-title">Bacterial Count (H2S Output)</div>
+                        <div class="gauge-value-large"><span id="val-bacteria">120</span> CFU/ml</div>
+                        <div class="gauge-bar-wrapper">
+                            <div class="gauge-bar-fill" id="bar-bacteria" style="width: 12%; background: var(--success);"></div>
+                        </div>
+                        <div class="gauge-labels">
+                            <span>Sterile: 0</span>
+                            <span class="target">Limit: 1,000</span>
+                            <span>Critical: 10,000</span>
+                        </div>
+                        <div class="gauge-status text-success" id="status-bacteria">Low Risk (Monday Odor Suppressed)</div>
+                    </div>
+                </div>
+
+                <!-- Live Acoustic Wave & Particle Separation Visualizer -->
+                <div class="dashboard-grid">
+                    <div class="card col-2">
+                        <div class="card-header">
+                            <h2>Sonophoretic Acoustic Separation Chamber (Live Physics Simulation)</h2>
+                        </div>
+                        <div class="acoustic-viz-container">
+                            <canvas id="acousticCanvas"></canvas>
+                            <div class="acoustic-overlay-panel">
+                                <div class="control-row">
+                                    <span>Acoustic Frequency:</span>
+                                    <strong class="highlight-cyan"><span id="lbl-acoustic-freq">1.60</span> MHz</strong>
+                                </div>
+                                <div class="control-row">
+                                    <span>Transducer Power:</span>
+                                    <strong class="highlight-cyan"><span id="lbl-acoustic-power">80</span>W</strong>
+                                </div>
+                                <div class="control-row">
+                                    <span>Standing Wave Status:</span>
+                                    <span class="badge badge-success">Resonance Achieved</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Telemetry & Warnings</h2>
+                        </div>
+                        <div class="telemetry-info-list">
+                            <div class="t-row">
+                                <span>Temperature</span>
+                                <strong id="val-temp">28.4°C</strong>
+                            </div>
+                            <div class="t-row">
+                                <span>Fluid Flow Rate</span>
+                                <strong id="val-flow">1.5 L/min</strong>
+                            </div>
+                            <div class="t-row">
+                                <span>DBD Plasma Duty Cycle</span>
+                                <strong id="val-plasma">25%</strong>
+                            </div>
+                            <div class="t-row">
+                                <span>PZT Transducer Temp</span>
+                                <strong id="val-pzt-temp">34.2°C</strong>
+                            </div>
+                            <div class="t-row">
+                                <span>Water Solenoid State</span>
+                                <strong class="text-muted" id="state-water-sol">CLOSED</strong>
+                            </div>
+                            <div class="t-row">
+                                <span>Concentrate Solenoid</span>
+                                <strong class="text-muted" id="state-conc-sol">CLOSED</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 3: SYSTEM CONTROLS -->
+            <section class="tab-content" id="tab-controls">
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Regenerator Manual Overrides</h2>
+                        <p class="text-muted">Directly adjust actuator and transducer parameters for CNC-01</p>
+                    </div>
+
+                    <div class="controls-layout">
+                        <!-- Left Panel: Sliders -->
+                        <div class="controls-panel">
+                            <div class="control-slider-group">
+                                <div class="slider-header">
+                                    <span>Acoustic Transducer Power (W)</span>
+                                    <span id="slider-val-pzt">80 W</span>
+                                </div>
+                                <input type="range" min="0" max="150" value="80" class="slider" id="input-pzt-power">
+                                <p class="help-text">Increases acoustic pressure node amplitude to separate smaller tramp oil droplets.</p>
+                            </div>
+
+                            <div class="control-slider-group">
+                                <div class="slider-header">
+                                    <span>DBD Plasma Sterilizer Intensity (%)</span>
+                                    <span id="slider-val-plasma">25 %</span>
+                                </div>
+                                <input type="range" min="0" max="100" value="25" class="slider" id="input-plasma-power">
+                                <p class="help-text">Controls ozone/ROS generation. Keep under 40% to preserve chemical additives.</p>
+                            </div>
+
+                            <div class="control-slider-group">
+                                <div class="slider-header">
+                                    <span>Acoustic Resonance Frequency Tuning (MHz)</span>
+                                    <span id="slider-val-freq">1.60 MHz</span>
+                                </div>
+                                <input type="range" min="150" max="170" value="160" class="slider" id="input-freq">
+                                <p class="help-text">Fine-tunes the transducer drive frequency to match chamber thermal shift.</p>
+                            </div>
+                        </div>
+
+                        <!-- Right Panel: Toggles & Actions -->
+                        <div class="controls-toggles">
+                            <div class="control-toggle-card">
+                                <div class="toggle-info">
+                                    <h4>Acoustic Separator Power</h4>
+                                    <p>Toggle standing wave separation chamber</p>
+                                </div>
+                                <label class="switch">
+                                    <input type="checkbox" checked id="toggle-acoustic">
+                                    <span class="slider-toggle"></span>
+                                </label>
+                            </div>
+
+                            <div class="control-toggle-card">
+                                <div class="toggle-info">
+                                    <h4>DBD Plasma Cell</h4>
+                                    <p>Toggle advanced oxidation sterilization</p>
+                                </div>
+                                <label class="switch">
+                                    <input type="checkbox" checked id="toggle-plasma">
+                                    <span class="slider-toggle"></span>
+                                </label>
+                            </div>
+
+                            <div class="control-toggle-card">
+                                <div class="toggle-info">
+                                    <h4>Auto-Concentration PID</h4>
+                                    <p>Auto-dosing of water and concentrate</p>
+                                </div>
+                                <label class="switch">
+                                    <input type="checkbox" checked id="toggle-autodose">
+                                    <span class="slider-toggle"></span>
+                                </label>
+                            </div>
+
+                            <!-- Manual Dosing Buttons -->
+                            <div class="dosing-button-group">
+                                <button class="btn btn-secondary" id="btn-dose-water">💧 Manual Water Dose</button>
+                                <button class="btn btn-secondary" id="btn-dose-oil">🛢️ Manual Oil Dose</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Simulation Lab Controller -->
+                <div class="card mt-20">
+                    <div class="card-header">
+                        <h2>Simulation Sandtable (Test Scenarios)</h2>
+                        <p class="text-muted">Introduce artificial sump failures to observe how the regenerator system reacts.</p>
+                    </div>
+                    <div class="sim-actions-grid">
+                        <button class="btn btn-danger-outline" id="sim-leak-trampoil">🚨 Simulate Tramp Oil Leak</button>
+                        <button class="btn btn-danger-outline" id="sim-evap">☀️ Simulate Water Evaporation</button>
+                        <button class="btn btn-danger-outline" id="sim-bacteria">🦠 Inoculate Sump (Bacteria Surge)</button>
+                        <button class="btn btn-success-outline" id="sim-reset">🔄 Reset Sump to Perfect 7.0%</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 4: ESG & ANALYTICS -->
+            <section class="tab-content" id="tab-analytics">
+                <div class="dashboard-grid">
+                    <div class="card col-2">
+                        <div class="card-header">
+                            <h2>Coolant Savings & ROI Timeline</h2>
+                        </div>
+                        <div class="analytics-chart-placeholder">
+                            <div class="roi-metric-large">₹84,500 Saved</div>
+                            <p>Accumulated savings in raw oil concentrate purchases since installation (CNC-01 alone)</p>
+                            
+                            <table class="roi-table">
+                                <thead>
+                                    <tr>
+                                        <th>Metric</th>
+                                        <th>Pre-Acoustox</th>
+                                        <th>With Acoustox</th>
+                                        <th>Reduction</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Annual Oil Concentrate Consumption</td>
+                                        <td>180 Liters</td>
+                                        <td>35 Liters</td>
+                                        <td class="text-success">80.5%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Hazardous Coolant Waste Disposal</td>
+                                        <td>1,200 Liters</td>
+                                        <td>80 Liters</td>
+                                        <td class="text-success">93.3%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Tool Wear Replacement Rate</td>
+                                        <td>Once every 12 days</td>
+                                        <td>Once every 16 days</td>
+                                        <td class="text-success">25.0%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Dermatitis Incidents</td>
+                                        <td>4 cases / year</td>
+                                        <td>0 cases / year</td>
+                                        <td class="text-success">100%</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Environmental Impact (ESG)</h2>
+                        </div>
+                        <div class="esg-metrics">
+                            <div class="esg-circle">
+                                <div class="esg-val">90%</div>
+                                <div class="esg-lbl">ZED Goal Met</div>
+                            </div>
+                            <div class="esg-text-list">
+                                <div class="esg-item">
+                                    <span>Carbon Offset (CO2e)</span>
+                                    <strong>420 kg</strong>
+                                </div>
+                                <div class="esg-item">
+                                    <span>Ground Water Contamination Avoided</span>
+                                    <strong>12,400 L</strong>
+                                </div>
+                                <div class="esg-item">
+                                    <span>Hazardous waste reduction rating</span>
+                                    <strong class="text-success">A++ Rating</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

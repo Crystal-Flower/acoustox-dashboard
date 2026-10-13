@@ -1,0 +1,27 @@
+# Acoustox — IoT Sump Health & Purification Dashboard
+
+An industrial IoT telemetry dashboard and monitoring interface for CNC machine sump fluid health, tracking contamination levels, acoustic cavitation, and non-thermal plasma purification systems.
+
+## ?? Monitored Parameters
+
+- **Brix Concentration (%)**: Real-time refractometer fluid ratio.
+- **pH Level**: Acidic vs alkaline fluid balance monitoring.
+- **Tramp Oil (% volume)**: Surface hydrocarbon layer detection.
+- **Bacterial Load (CFU/mL)**: Microbial bio-burden estimation.
+- **Flow Rate & Temperature**: Coolant circulation status.
+- **Acoustic Cavitation & Plasma Power**: Active transducer controls (PZT power, kHz frequency, plasma discharge).
+
+## ?? Quick Start
+
+Simply serve or open index.html in any modern web browser:
+\\\ash
+# Python quick server:
+python -m http.server 3000
+# Or double-click index.html
+\\\
+"@ | Set-Content -Path acoustox-dashboard\README.md -Encoding utf8
+
+@"
+.vscode/
+.idea/
+*.log
